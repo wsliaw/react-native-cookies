@@ -1,4 +1,4 @@
-// RNCookieManagerIOS.h
+#import <Foundation/Foundation.h>
 #import "RCTBridgeModule.h"
 
 #import <WebKit/WebKit.h>
