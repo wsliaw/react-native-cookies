@@ -1,9 +1,5 @@
 #import "RNCookieManagerIOS.h"
-#if __has_include("RCTConvert.h")
 #import "RCTConvert.h"
-#else
-#import <React/RCTConvert.h>
-#endif
 
 static NSString * const NOT_AVAILABLE_ERROR_MESSAGE = @"WebKit/WebKit-Components are only available with iOS11 and higher!";
 
