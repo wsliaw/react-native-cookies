@@ -33,8 +33,8 @@ RCT_EXPORT_METHOD(
     NSString *domain = [RCTConvert NSString:props[@"domain"]];
     NSString *origin = [RCTConvert NSString:props[@"origin"]];
     NSString *path = [RCTConvert NSString:props[@"path"]];
-    NSString *version = [RCTConvert NSString:props[@"version"]];
-    NSDate *expiration = [RCTConvert NSDate:props[@"expiration"]];
+    NSNumber *version = [RCTConvert NSNumber:props[@"version"]];
+    NSDate *expiration = [self.formatter dateFromString:props[@"expiresDate"]];
 
     NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
     if (name) [cookieProperties setObject:name forKey:NSHTTPCookieName];
@@ -234,6 +234,7 @@ RCT_EXPORT_METHOD(
     [cookieData setObject:cookie.domain forKey:@"domain"];
     [cookieData setObject:cookie.path forKey:@"path"];
 
+    [cookieData setObject:@(cookie.version) forKey:@"version"];
     if (cookie.expiresDate) {
         [cookieData setObject:[self.formatter stringFromDate:cookie.expiresDate] forKey:@"expiresDate"];
     }
