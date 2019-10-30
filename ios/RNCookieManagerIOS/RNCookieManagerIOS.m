@@ -242,4 +242,31 @@ RCT_EXPORT_METHOD(
     return cookieData;
 }
 
+RCT_EXPORT_METHOD(
+    rewriteCookiesToWebkit:(NSURL*)url
+    resolver:(RCTPromiseResolveBlock)resolve
+    rejecter:(RCTPromiseRejectBlock)reject)
+{
+    if (@available(iOS 11.0, *)) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSArray<NSHTTPCookie *> * cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:url];
+
+            WKHTTPCookieStore *cookieStore = [[WKWebsiteDataStore defaultDataStore] httpCookieStore];
+            for (int i = 0; i < cookies.count; i++)
+            {
+                [cookieStore setCookie:[cookies objectAtIndex:i] completionHandler:^{
+                    NSLog(@"item complete");
+                    if (i + 1 == cookies.count) {
+                        resolve(nil);
+                        NSLog(@"all complete");
+                    }
+                }];
+            }
+
+        });
+    } else {
+        resolve(nil);
+    }
+}
+
 @end
