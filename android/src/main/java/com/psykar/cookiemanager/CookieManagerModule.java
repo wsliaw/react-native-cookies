@@ -127,6 +127,12 @@ public class CookieManagerModule extends ReactContextBaseJavaModule {
         });
     }
 
+    @ReactMethod
+    public void rewriteCookiesToWebkit(String url, final Promise promise) {
+        // Android directly resovle is ok
+        promise.resolve(null);
+    }
+
     private void setCookie( String url, String value ) throws URISyntaxException, IOException {
         URI uri = new URI(url);
         Map<String, List<String>> cookieMap = new HashMap<>();
