@@ -158,14 +158,17 @@ RCT_EXPORT_METHOD(
                     for(NSHTTPCookie *currentCookie in allCookies) {
                         // Uses the NSHTTPCookie directly has no effect, nor deleted the cookie nor thrown an error.
                         // Create a new cookie with the given values and delete this one do the work.
-                        NSMutableDictionary<NSHTTPCookiePropertyKey, id> *cookieData =  [NSMutableDictionary dictionary];
-                        [cookieData setValue:currentCookie.name forKey:NSHTTPCookieName];
-                        [cookieData setValue:currentCookie.value forKey:NSHTTPCookieValue];
-                        [cookieData setValue:currentCookie.domain forKey:NSHTTPCookieDomain];
-                        [cookieData setValue:currentCookie.path forKey:NSHTTPCookiePath];
+                        // NSMutableDictionary<NSHTTPCookiePropertyKey, id> *cookieData =  [NSMutableDictionary dictionary];
+                        // [cookieData setValue:currentCookie.name forKey:NSHTTPCookieName];
+                        // [cookieData setValue:currentCookie.value forKey:NSHTTPCookieValue];
+                        // [cookieData setValue:currentCookie.domain forKey:NSHTTPCookieDomain];
+                        // [cookieData setValue:currentCookie.path forKey:NSHTTPCookiePath];
 
-                        NSHTTPCookie *newCookie = [NSHTTPCookie cookieWithProperties:cookieData];
-                        [cookieStore deleteCookie:newCookie completionHandler:^{}];
+                        // NSHTTPCookie *newCookie = [NSHTTPCookie cookieWithProperties:cookieData];
+                        // [cookieStore deleteCookie:newCookie completionHandler:^{}];
+                        [cookieStore deleteCookie:currentCookie completionHandler:^{
+                          RCTLogInfo(@"delete complete %@", currentCookie.name);
+                        }];
                     }
                     resolve(nil);
                 }];
